@@ -15,7 +15,7 @@ import ContentProvider, { encodeLocation } from './provider';
 // this method determines if the scope of the
 // file is coffee based.
 let fScopeIsCoffee = function(document: TextDocument): number {
-  return languages.match(['coffeescript'], document);
+  return languages.match(['coffeescript'], document) || languages.match(['vue'],document);
 };
 
 // this method is called when your extension is activated
@@ -37,7 +37,8 @@ let fActivate = function(context: ExtensionContext) {
   const commandRegistrations = commands.registerTextEditorCommand(
     'coffee2preview.check',
     oEditor => {
-      if (!fScopeIsCoffee(oEditor.document)) {
+      const result = fScopeIsCoffee(oEditor.document);
+      if (!result) {
         return;
       }
 

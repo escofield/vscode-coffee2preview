@@ -60,8 +60,9 @@ export default class Provider implements vscode.TextDocumentContentProvider {
       const oEditor = vscode.window.activeTextEditor;
       // this method determines if the scope of the
       // file is coffee based.
-      if (!(oEditor && languages.match(['coffeescript'], oEditor.document)))
+      if (!(oEditor && (languages.match(['coffeescript'], oEditor.document) || languages.match(['vue'], oEditor.document)))){
         return;
+      }
 
       // this method shows the results of the compile
       let fShowResult = function(sContent: string) {
